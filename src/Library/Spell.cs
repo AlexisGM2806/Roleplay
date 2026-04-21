@@ -36,4 +36,24 @@ public class Spell
         Attack = Math.Max(0, attack);
         Defense = Math.Max(0, defense);
     }
+    
+    /// <summary>
+    /// Se utiliza override de Equals porque la comparación por defecto de objetos en C#
+    /// se basa en la referencia (memoria) y no en el contenido. 
+    /// En este caso se redefine para que dos hechizos se consideren iguales si
+    /// tienen el mismo nombre, ataque y defensa, lo cual permite evitar duplicados
+    /// lógicos en el Spellbook al usar Contains o Remove.
+    /// </summary>
+    public override bool Equals(object obj)
+    {
+        return this.Name.Equals(((Spell)obj).Name) && this.Attack==((Spell)obj).Attack && this.Defense==((Spell)obj).Defense;
+    }
+    /// <summary>
+    /// Complemento obligatorio de Equals. 
+    /// Se redefine para mantener consistencia con la comparación por contenido.
+    /// </summary>
+    public override int GetHashCode()
+    {
+        return HashCode.Combine(Name, Attack, Defense);
+    }
 }

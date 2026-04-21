@@ -16,12 +16,12 @@ public class Wizard
     /// <summary>
     /// Libro de hechizos del mago.
     /// </summary>
-    private Spellbook spellbook = new Spellbook();
+    private Spellbook spellbook { get; set; }
 
     /// <summary>
     /// Bastón del mago.
     /// </summary>
-    private Staff staff = new Staff();
+    private Staff staff { get;set; }
 
     /// <summary>
     /// Vida actual del mago.
@@ -106,5 +106,8 @@ public class Wizard
         MaxHealth = 100;
         Health = MaxHealth;
         Name = name;
+        
+        spellbook = new Spellbook();
+        staff = new Staff();
     }
 }
