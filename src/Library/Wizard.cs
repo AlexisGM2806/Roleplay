@@ -5,6 +5,9 @@ namespace Library;
 /// <summary>
 /// Representa un mago dentro del juego.
 /// Los magos utilizan un bastón y un libro de hechizos para atacar y defenderse.
+/// Se aplica encapsulamiento para proteger el estado interno del personaje.
+/// Cada ítem es responsable de sus propios valores, manteniendo separación de
+/// responsabilidades.
 /// </summary>
 public class Wizard
 {
@@ -98,7 +101,7 @@ public class Wizard
     }
 
     /// <summary>
-    /// Inicializa una nueva instancia del mago con su nombre y vida máxima.
+    /// Inicializa una nueva instancia del mago con su nombre y vida máxima además de sus items.
     /// </summary>
     /// <param name="name">Nombre del mago.</param>
     public Wizard(string name)
