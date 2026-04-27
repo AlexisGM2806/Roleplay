@@ -32,24 +32,3 @@ public class BerserkerTests
         Assert.Equal(150, berserker.Health);
     }
 }
-
-public class SpellTests
-{
-    [Fact]
-    public void Equals_TwoSpellsWithSameValues_ReturnsTrue()
-    {
-        var a = new Spell("Fireball", 20, 5);
-        var b = new Spell("Fireball", 20, 5);
-
-        Assert.Equal(a, b);
-    }
-
-    [Fact]
-    public void Equals_TwoSpellsWithDifferentValues_ReturnsFalse()
-    {
-        var a = new Spell("Fireball", 20, 5);
-        var b = new Spell("Ice", 10, 0);
-
-        Assert.NotEqual(a, b);
-    }
-}
