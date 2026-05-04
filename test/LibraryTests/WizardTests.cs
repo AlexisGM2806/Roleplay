@@ -17,17 +17,16 @@ namespace Ucu.Poo.RolePlayGame.Tests
         private Spell magicMissile;
         private Spell magicArmor;
 
-
         [SetUp]
         public void Setup()
         {
-            wizard = new Wizard ("Elminster");
+            wizard = new Wizard("Elminster");
 
-            staffWeak = new Staff (0, 0);
-            staffStrong = new Staff (10, 5);
+            staffWeak = new Staff(0, 0);
+            staffStrong = new Staff(10, 5);
 
-            fireball = new Spell ("Fireball", 10, 0);
-            magicMissile = new Spell ("MagicMissile", 10, 0);
+            fireball = new Spell("Fireball", 10, 0);
+            magicMissile = new Spell("MagicMissile", 10, 0);
 
             spellbookEmpty = new Spellbook();
 
@@ -57,8 +56,11 @@ namespace Ucu.Poo.RolePlayGame.Tests
         [Test]
         public void ReceiveAttack_HigherDefenseThanAttack_ReducesNoHealth()
         {
+            Wizard attacker = new Wizard("Attacker");
+            attacker.SetStaff(new Staff(5, 0));
+
             wizard.SetStaff(staffStrong);
-            wizard.ReceiveAttack(5);
+            wizard.ReceiveAttack(attacker);
             
             Assert.That(wizard.Health, Is.EqualTo(100));
         }
@@ -66,7 +68,10 @@ namespace Ucu.Poo.RolePlayGame.Tests
         [Test]
         public void ReceiveAttack_LethalDamage_HealthNeverBelowZero()
         {
-            wizard.ReceiveAttack(120);
+            Wizard attacker = new Wizard("Attacker");
+            attacker.SetStaff(new Staff(120, 0));
+
+            wizard.ReceiveAttack(attacker);
            
             Assert.That(wizard.Health, Is.EqualTo(0));
         }
@@ -74,10 +79,13 @@ namespace Ucu.Poo.RolePlayGame.Tests
         [Test]
         public void Heal_AfterDamage_RestoresMaxHealth()
         {
-            wizard.ReceiveAttack(120);
+            Wizard attacker = new Wizard("Attacker");
+            attacker.SetStaff(new Staff(120, 0));
+
+            wizard.ReceiveAttack(attacker);
             wizard.Heal();
            
-            Assert.That(wizard.Health,Is.EqualTo(100));
+            Assert.That(wizard.Health, Is.EqualTo(100));
         }
 
         [Test]
@@ -89,8 +97,8 @@ namespace Ucu.Poo.RolePlayGame.Tests
             wizard.SetStaff(staffStrong);
             int attack2 = wizard.GetAttack();
            
-            Assert.That(attack1,Is.EqualTo(0));
-            Assert.That(attack2,Is.EqualTo(10));
+            Assert.That(attack1, Is.EqualTo(0));
+            Assert.That(attack2, Is.EqualTo(10));
         }
 
         [Test]

@@ -9,7 +9,7 @@ namespace Library;
 /// Cada ítem es responsable de sus propios valores, manteniendo separación de
 /// responsabilidades.
 /// </summary>
-public class Wizard
+public class Wizard : ICharacter
 {
     /// <summary>
     /// Nombre del mago.
@@ -22,9 +22,10 @@ public class Wizard
     private Spellbook spellbook { get; set; }
 
     /// <summary>
-    /// Bastón del mago.
+    /// Objeto equipado por el mago (por ejemplo, un bastón).
+    /// Se modela mediante la interfaz IObject para permitir flexibilidad.
     /// </summary>
-    private Staff staff { get;set; }
+    private IObject staff { get; set; }
 
     /// <summary>
     /// Vida actual del mago.
@@ -37,10 +38,10 @@ public class Wizard
     public int MaxHealth { get; private set; }
 
     /// <summary>
-    /// Permite cambiar el bastón del mago por otro.
+    /// Permite cambiar el objeto equipado del mago.
     /// </summary>
-    /// <param name="newStaff">Nuevo bastón a equipar.</param>
-    public void SetStaff(Staff newStaff)
+    /// <param name="newStaff">Nuevo staff a equipar.</param>
+    public void SetStaff(IObject newStaff)
     {
         if (newStaff != null)
         {
@@ -61,16 +62,21 @@ public class Wizard
     }
 
     /// <summary>
-    /// Recibe un ataque, reduciendo la vida del mago en función del ataque recibido
-    /// y su defensa total.
+    /// Recibe un ataque de otro personaje, reduciendo la vida del mago
+    /// en función del ataque del atacante y su defensa total.
     /// Se utiliza Math.Max para asegurar que:
-    /// - El daño nunca sea negativo (si la defensa es mayor al ataque).
+    /// - El daño nunca sea negativo.
     /// - La vida nunca baje de 0.
     /// </summary>
-    /// <param name="attack_power">Valor de ataque recibido.</param>
-    public void ReceiveAttack(int attack_power)
+    /// <param name="attacker">Personaje que realiza el ataque.</param>
+    public void ReceiveAttack(ICharacter attacker)
     {
-        int damage = Math.Max(0, attack_power - GetDefense());
+        if (attacker == null)
+        {
+            return;
+        }
+
+        int damage = Math.Max(0, attacker.GetAttack() - GetDefense());
         Health = Math.Max(0, Health - damage);
     }
 
@@ -101,7 +107,8 @@ public class Wizard
     }
 
     /// <summary>
-    /// Inicializa una nueva instancia del mago con su nombre y vida máxima además de sus items.
+    /// Inicializa una nueva instancia del mago con su nombre y vida máxima además de sus ítems.
+    /// Se inicializan valores por defecto para evitar referencias nulas.
     /// </summary>
     /// <param name="name">Nombre del mago.</param>
     public Wizard(string name)

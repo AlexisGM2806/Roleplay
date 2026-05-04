@@ -4,9 +4,9 @@ namespace Library;
 
 /// <summary>
 /// Representa un bastón que puede ser utilizado por un personaje.
-/// Aporta valores de ataque y defensa.
+/// Aporta valores de ataque y defensa. No es un objeto mágico.
 /// </summary>
-public class Staff
+public class Staff : IObject
 {
     /// <summary>
     /// Valor de ataque del bastón.
@@ -19,16 +19,21 @@ public class Staff
     public int Defense { get; }
 
     /// <summary>
+    /// Indica si el objeto es mágico.
+    /// En este caso, el bastón no es mágico.
+    /// </summary>
+    public bool IsMagical => false;
+
+    /// <summary>
     /// Inicializa una nueva instancia de un bastón con valores por defecto.
     /// </summary>
     public Staff() : this(0, 0)
     {
     }
-    
+
     /// <summary>
     /// Inicializa una nueva instancia de un bastón con ataque y defensa.
-    /// Se utiliza Math.Max para asegurar que los valores de ataque
-    /// y defensa no sean negativos.
+    /// Se utiliza Math.Max para asegurar que los valores no sean negativos.
     /// </summary>
     /// <param name="attack">Valor de ataque del bastón.</param>
     /// <param name="defense">Valor de defensa del bastón.</param>
