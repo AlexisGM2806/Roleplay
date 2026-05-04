@@ -44,8 +44,10 @@ namespace Ucu.Poo.RolePlayGame.Tests
         [Test]
         public void ReceiveAttack_HigherDefenseThanAttack_ReducesNoHealth()
         {
-            dwarf.SetShield(shieldStrong);
-            dwarf.ReceiveAttack(5);
+            dwarf.SetShield(shieldStrong); // defensa 5
+            Dwarf attacker = new Dwarf("Attacker");
+            attacker.SetSword(new Sword(4)); // ataca 4, menor que defensa 5
+            dwarf.ReceiveAttack(attacker);
 
             Assert.That(dwarf.Health, Is.EqualTo(100));
         }
@@ -53,7 +55,9 @@ namespace Ucu.Poo.RolePlayGame.Tests
         [Test]
         public void ReceiveAttack_LethalDamage_HealthNeverBelowZero()
         {
-            dwarf.ReceiveAttack(120);
+            Dwarf attacker = new Dwarf("Attacker");
+            attacker.SetSword(new Sword(120));
+            dwarf.ReceiveAttack(attacker);
 
             Assert.That(dwarf.Health, Is.EqualTo(0));
         }
@@ -61,7 +65,9 @@ namespace Ucu.Poo.RolePlayGame.Tests
         [Test]
         public void Heal_AfterDamage_RestoresMaxHealth()
         {
-            dwarf.ReceiveAttack(120);
+            Dwarf attacker = new Dwarf("Attacker");
+            attacker.SetSword(new Sword(120));
+            dwarf.ReceiveAttack(attacker);
             dwarf.Heal();
 
             Assert.That(dwarf.Health, Is.EqualTo(100));
