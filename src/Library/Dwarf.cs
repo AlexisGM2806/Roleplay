@@ -9,7 +9,7 @@ namespace Library;
 /// Cada ítem es responsable de sus propios valores, manteniendo separación de
 /// responsabilidades.
 /// </summary>
-public class Dwarf
+public class Dwarf : ICharacter
 {
     /// <summary>
     /// Nombre del enano.
@@ -19,12 +19,12 @@ public class Dwarf
     /// <summary>
     /// Espada del enano.
     /// </summary>
-    private Sword sword { get; set; }
+    private IObject sword { get; set; }
 
     /// <summary>
     /// Escudo del enano.
     /// </summary>
-    private Shield shield { get; set; }
+    private IObject shield { get; set; }
 
     /// <summary>
     /// Vida actual del enano.
@@ -40,7 +40,7 @@ public class Dwarf
     /// Permite cambiar la espada del enano por otra.
     /// </summary>
     /// <param name="newSword">Nueva espada a equipar.</param>
-    public void SetSword(Sword newSword)
+    public void SetSword(IObject newSword)
     {
         if (newSword != null)
         {
@@ -52,7 +52,7 @@ public class Dwarf
     /// Permite cambiar el escudo del enano por otro.
     /// </summary>
     /// <param name="newShield">Nuevo escudo a equipar.</param>
-    public void SetShield(Shield newShield)
+    public void SetShield(IObject newShield)
     {
         if (newShield != null)
         {
@@ -61,13 +61,12 @@ public class Dwarf
     }
 
     /// <summary>
-    /// Recibe un ataque, reduciendo la vida del enano en función del ataque recibido
-    /// y su defensa total.
+    /// Recibe un ataque proveniente de otro personaje.
     /// </summary>
-    /// <param name="attack_power">Valor de ataque recibido.</param>
-    public void ReceiveAttack(int attack_power)
+    /// <param name="attacker">Personaje atacante.</param>
+    public void ReceiveAttack(ICharacter attacker)
     {
-        int damage = Math.Max(0, attack_power - GetDefense());
+        int damage = Math.Max(0, attacker.GetAttack() - GetDefense());
         Health = Math.Max(0, Health - damage);
     }
 
