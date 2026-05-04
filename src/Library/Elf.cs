@@ -6,7 +6,7 @@ namespace Library;
 /// Representa un elfo dentro del juego.
 /// Los elfos utilizan un arco para atacar y un casco para defenderse.
 /// </summary>
-public class Elf
+public class Elf : ICharacter
 {
     /// <summary>
     /// Nombre del elfo.
@@ -16,12 +16,12 @@ public class Elf
     /// <summary>
     /// Arco del elfo.
     /// </summary>
-    private Bow bow { get; set; }
+    private IObject bow { get; set; }
 
     /// <summary>
     /// Casco del elfo.
     /// </summary>
-    private Helmet helmet { get; set; }
+    private IObject helmet { get; set; }
 
     /// <summary>
     /// Vida actual del elfo.
@@ -58,13 +58,17 @@ public class Elf
     }
 
     /// <summary>
-    /// Recibe un ataque, reduciendo la vida del elfo en función del ataque recibido
-    /// y su defensa total.
+    /// Recibe un ataque de otro personaje, reduciendo la vida del berserker
+    /// en función del ataque del atacante y su defensa total.
+    /// Se utiliza Math.Max para asegurar que:
+    /// - El daño nunca sea negativo.
+    /// - La vida nunca baje de 0.
     /// </summary>
-    /// <param name="attack_power">Valor de ataque recibido.</param>
-    public void ReceiveAttack(int attack_power)
+    /// <param name="attacker">Personaje que realiza el ataque.</param>
+    public void ReceiveAttack(ICharacter attacker)
     {
-        int damage = Math.Max(0, attack_power - GetDefense());
+        if (attacker == null) return;
+        int damage = Math.Max(0, attacker.GetAttack() - GetDefense());
         Health = Math.Max(0, Health - damage);
     }
 

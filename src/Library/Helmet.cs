@@ -13,6 +13,10 @@ public class Helmet
     /// </summary>
     public int Defense { get; }
 
+    public int Attack {get; } = 0;
+
+    public bool IsMagical => false;
+
     /// <summary>
     /// Inicializa una nueva instancia de un casco con valor por defecto.
     /// </summary>
