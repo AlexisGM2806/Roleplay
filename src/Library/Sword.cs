@@ -5,7 +5,7 @@ namespace Library;
 /// <summary>
 /// Representa una espada usada por el enano para atacar.
 /// </summary>
-public class Sword : IObject
+public class Sword : IAttackItem
 {
     /// <summary>
     /// Valor de ataque de la espada.
@@ -15,7 +15,6 @@ public class Sword : IObject
     /// <summary>
     /// Valor de defensa de la espada (no defiende).
     /// </summary>
-    public int Defense { get; } = 0;
 
     /// <summary>
     /// La espada no es mágica.
@@ -32,7 +31,7 @@ public class Sword : IObject
     /// <summary>
     /// Inicializa una nueva instancia de una espada con ataque definido.
     /// </summary>
-    /// <param name="attack">Valor de ataque de la espada.</param>
+    /// <param name="attack">Valor de ataque de la espada.</param>  
     public Sword(int attack)
     {
         Attack = Math.Max(0, attack);

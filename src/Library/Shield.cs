@@ -5,12 +5,11 @@ namespace Library;
 /// <summary>
 /// Representa un escudo usado por el enano para defenderse.
 /// </summary>
-public class Shield : IObject
+public class Shield : IDefenseItem
 {
     /// <summary>
     /// Valor de ataque del escudo (no ataca).
     /// </summary>
-    public int Attack { get; } = 0;
 
     /// <summary>
     /// Valor de defensa del escudo.

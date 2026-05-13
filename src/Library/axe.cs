@@ -1,9 +1,8 @@
 namespace Library;
 
-public class Axe : IObject
+public class Axe : IAttackItem
 {
     public int Attack { get; }
-    public int Defense { get; } = 0;
     public bool IsMagical { get; } = false;
 
     public Axe() : this(0) { }
