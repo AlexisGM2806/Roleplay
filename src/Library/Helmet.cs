@@ -6,14 +6,12 @@ namespace Library;
 /// Representa un casco que puede ser utilizado por un personaje.
 /// Aporta valor de defensa.
 /// </summary>
-public class Helmet
+public class Helmet : IDefenseItem
 {
     /// <summary>
     /// Valor de defensa del casco.
     /// </summary>
     public int Defense { get; }
-
-    public int Attack {get; } = 0;
 
     public bool IsMagical => false;
 

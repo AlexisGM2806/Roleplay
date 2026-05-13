@@ -6,14 +6,12 @@ namespace Library;
 /// Representa un arco que puede ser utilizado por un personaje.
 /// Aporta valor de ataque.
 /// </summary>
-public class Bow :IObject
+public class Bow :IAttackItem
 {
     /// <summary>
     /// Valor de ataque del arco.
     /// </summary>
     public int Attack { get; }
-
-    public int Defense {get;} = 0;
 
     public bool IsMagical => false;
 

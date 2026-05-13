@@ -6,7 +6,7 @@ namespace Library;
 /// Representa un bastón que puede ser utilizado por un personaje.
 /// Aporta valores de ataque y defensa. No es un objeto mágico.
 /// </summary>
-public class Staff : IObject
+public class Staff : IAttackItem,IDefenseItem
 {
     /// <summary>
     /// Valor de ataque del bastón.

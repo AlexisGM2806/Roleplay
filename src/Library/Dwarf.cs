@@ -54,7 +54,7 @@ public class Dwarf : ICharacter
     /// <param name="newShield">Nuevo escudo a equipar.</param>
     public void SetShield(IObject newShield)
     {
-        if (newShield != null)
+        if (newShield != null) 
         {
             shield = newShield;
         }

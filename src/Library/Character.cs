@@ -7,7 +7,7 @@ public abstract class Character
 {
     public int MaxHealth { get; private set;}
 
-    public int Health { get; private set;}
+        public int Health { get; private set;}
 
     public string Name { get; }
 
