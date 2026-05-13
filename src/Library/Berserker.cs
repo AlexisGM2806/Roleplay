@@ -76,7 +76,7 @@ public class Berserker : ICharacter
     /// - La vida nunca baje de 0.
     /// </summary>
     /// <param name="attacker">Personaje que realiza el ataque.</param>
-    public void ReceiveAttack(ICharacter attacker)
+    public void ReceiveAttack(Character attacker)
     {
         if (attacker == null) return;
         int damage = Math.Max(0, attacker.GetAttack() - GetDefense());
