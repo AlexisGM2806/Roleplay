@@ -11,12 +11,12 @@ public class Bastardo : Enemy
     /// <summary>
     /// Hacha del bastardo.
     /// </summary>
-    private IObject machete { get; set; }
+    private IAttackItem machete { get; set; }
    
     /// <summary>
     /// Armadura del bastardo.
     /// </summary>
-    private IObject layer { get; set; }
+    private IDefenseItem layer { get; set; }
 
     /// <summary>
     /// Nombre del bastardo.
@@ -92,7 +92,7 @@ public class Bastardo : Enemy
     /// Permite cambiar el machete del bastardo por otro.
     /// </summary>
     /// <param name="newMachete">Nuevo machete a equipar.</param>
-    public void SetMachete(IObject newMachete)
+    public void SetMachete(IAttackItem newMachete)
     {
         if (newMachete != null)
         {
@@ -104,7 +104,7 @@ public class Bastardo : Enemy
     /// Permite cambiar la armadura del bastardo por otra.
     /// </summary>
     /// <param name="newLayer">Nueva armadura a equipar.</param>
-    public void SetLayer(IObject newLayer)
+    public void SetLayer(IDefenseItem newLayer)
     {
         if (newLayer != null)
         {
