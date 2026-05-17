@@ -30,7 +30,7 @@ namespace Ucu.Poo.RolePlayGame.Tests
         {
             encounter.AddHero(wizard);
 
-            Assert.That(encounter.Heroes.Count, Is.EqualTo(1));
+            Assert.That(encounter.heroes.Count, Is.EqualTo(1));
         }
 
         [Test]
@@ -38,7 +38,7 @@ namespace Ucu.Poo.RolePlayGame.Tests
         {
             encounter.AddEnemy(orc);
 
-            Assert.That(encounter.Enemies.Count, Is.EqualTo(1));
+            Assert.That(encounter.enemies.Count, Is.EqualTo(1));
         }
 
         [Test]
@@ -85,7 +85,7 @@ namespace Ucu.Poo.RolePlayGame.Tests
 
             encounter.DoEncounter();
 
-            Assert.That(encounter.Enemies.Contains(orc), Is.False);
+            Assert.That(encounter.enemies.Contains(orc), Is.False);
         }
 
         [Test]
@@ -99,7 +99,7 @@ namespace Ucu.Poo.RolePlayGame.Tests
 
             encounter.DoEncounter();
 
-            Assert.That(encounter.Heroes.Contains(wizard), Is.False);
+            Assert.That(encounter.heroes.Contains(wizard), Is.False);
         }
 
         [Test]
