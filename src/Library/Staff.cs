@@ -20,9 +20,9 @@ public class Staff : IAttackItem,IDefenseItem
 
     /// <summary>
     /// Indica si el objeto es mágico.
-    /// En este caso, el bastón no es mágico.
+    /// En este caso, el bastón es mágico.
     /// </summary>
-    public bool IsMagical => false;
+    public bool IsMagical => true;
 
     /// <summary>
     /// Inicializa una nueva instancia de un bastón con valores por defecto.

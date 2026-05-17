@@ -4,55 +4,71 @@ namespace Library;
 
 /// <summary>
 /// Representa un mago dentro del juego.
-/// Los magos utilizan un bastón y un libro de hechizos para atacar y defenderse.
-/// Se aplica encapsulamiento para proteger el estado interno del personaje.
-/// Cada ítem es responsable de sus propios valores, manteniendo separación de
-/// responsabilidades.
+/// Los magos son héroes capaces de utilizar
+/// items mágicos y libros de hechizos.
 /// </summary>
-public class Wizard : ICharacter
+public class Wizard : Hero
 {
     /// <summary>
-    /// Nombre del mago.
+    /// Libro de hechizos equipado por el mago.
     /// </summary>
-    public string Name { get; }
+    private Spellbook spellbook;
 
     /// <summary>
-    /// Libro de hechizos del mago.
+    /// Bastón equipado por el mago.
     /// </summary>
-    private Spellbook spellbook { get; set; }
+    private IItem staff;
 
     /// <summary>
-    /// Objeto equipado por el mago (por ejemplo, un bastón).
-    /// Se modela mediante la interfaz IObject para permitir flexibilidad.
+    /// Inicializa una nueva instancia del mago
+    /// con valores por defecto.
     /// </summary>
-    private IObject staff { get; set; }
-
-    /// <summary>
-    /// Vida actual del mago.
-    /// </summary>
-    public int Health { get; private set; }
-
-    /// <summary>
-    /// Vida máxima del mago.
-    /// </summary>
-    public int MaxHealth { get; private set; }
-
-    /// <summary>
-    /// Permite cambiar el objeto equipado del mago.
-    /// </summary>
-    /// <param name="newStaff">Nuevo staff a equipar.</param>
-    public void SetStaff(IObject newStaff)
+    /// <param name="name">Nombre del mago.</param>
+    public Wizard(string name)
+        : base(name, 100)
     {
-        if (newStaff != null)
+        spellbook = new Spellbook();
+
+        staff = new Staff();
+
+        AddItem(staff);
+    }
+
+    /// <summary>
+    /// Los magos pueden equipar cualquier item,
+    /// incluyendo items mágicos.
+    /// </summary>
+    /// <param name="item">Item a equipar.</param>
+    public override void AddItem(IItem item)
+    {
+        if (item != null && !items.Contains(item))
         {
-            staff = newStaff;
+            items.Add(item);
         }
     }
 
     /// <summary>
-    /// Permite cambiar el libro de hechizos del mago por otro.
+    /// Equipa un nuevo bastón al mago.
     /// </summary>
-    /// <param name="newSpellbook">Nuevo libro de hechizos a equipar.</param>
+    /// <param name="newStaff">Nuevo bastón.</param>
+    public void SetStaff(IItem newStaff)
+    {
+        if (newStaff == null)
+        {
+            return;
+        }
+
+        RemoveItem(staff);
+
+        staff = newStaff;
+
+        AddItem(staff);
+    }
+
+    /// <summary>
+    /// Equipa un nuevo libro de hechizos.
+    /// </summary>
+    /// <param name="newSpellbook">Nuevo libro de hechizos.</param>
     public void SetSpellbook(Spellbook newSpellbook)
     {
         if (newSpellbook != null)
@@ -62,62 +78,22 @@ public class Wizard : ICharacter
     }
 
     /// <summary>
-    /// Recibe un ataque de otro personaje, reduciendo la vida del mago
-    /// en función del ataque del atacante y su defensa total.
-    /// Se utiliza Math.Max para asegurar que:
-    /// - El daño nunca sea negativo.
-    /// - La vida nunca baje de 0.
-    /// </summary>
-    /// <param name="attacker">Personaje que realiza el ataque.</param>
-    public void ReceiveAttack(ICharacter attacker)
-    {
-        if (attacker == null)
-        {
-            return;
-        }
-
-        int damage = Math.Max(0, attacker.GetAttack() - GetDefense());
-        Health = Math.Max(0, Health - damage);
-    }
-
-    /// <summary>
-    /// Obtiene el valor total de ataque del mago, sumando los valores de sus ítems.
+    /// Obtiene el ataque total del mago,
+    /// incluyendo hechizos y items ofensivos.
     /// </summary>
     /// <returns>Valor total de ataque.</returns>
-    public int GetAttack()
+    public override int GetAttack()
     {
-        return staff.Attack + spellbook.Attack;
+        return base.GetAttack() + spellbook.Attack;
     }
 
     /// <summary>
-    /// Obtiene el valor total de defensa del mago, sumando los valores de sus ítems.
+    /// Obtiene la defensa total del mago,
+    /// incluyendo hechizos y items defensivos.
     /// </summary>
     /// <returns>Valor total de defensa.</returns>
-    public int GetDefense()
+    public override int GetDefense()
     {
-        return staff.Defense + spellbook.Defense;
-    }
-
-    /// <summary>
-    /// Restaura la vida del mago a su valor máximo.
-    /// </summary>
-    public void Heal()
-    {
-        Health = MaxHealth;
-    }
-
-    /// <summary>
-    /// Inicializa una nueva instancia del mago con su nombre y vida máxima además de sus ítems.
-    /// Se inicializan valores por defecto para evitar referencias nulas.
-    /// </summary>
-    /// <param name="name">Nombre del mago.</param>
-    public Wizard(string name)
-    {
-        MaxHealth = 100;
-        Health = MaxHealth;
-        Name = name;
-        
-        spellbook = new Spellbook();
-        staff = new Staff();
+        return base.GetDefense() + spellbook.Defense;
     }
 }

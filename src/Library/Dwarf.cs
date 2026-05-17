@@ -4,109 +4,69 @@ namespace Library;
 
 /// <summary>
 /// Representa un enano dentro del juego.
-/// Los enanos utilizan una espada y un escudo para atacar y defenderse.
-/// Se aplica encapsulamiento para proteger el estado interno del personaje.
-/// Cada ítem es responsable de sus propios valores, manteniendo separación de
-/// responsabilidades.
+/// Los enanos utilizan espadas y escudos
+/// para combatir.
 /// </summary>
-public class Dwarf : ICharacter
+public class Dwarf : Hero
 {
     /// <summary>
-    /// Nombre del enano.
+    /// Espada equipada por el enano.
     /// </summary>
-    public string Name { get; }
+    private Sword sword;
 
     /// <summary>
-    /// Espada del enano.
+    /// Escudo equipado por el enano.
     /// </summary>
-    private IObject sword { get; set; }
+    private Shield shield;
 
     /// <summary>
-    /// Escudo del enano.
-    /// </summary>
-    private IObject shield { get; set; }
-
-    /// <summary>
-    /// Vida actual del enano.
-    /// </summary>
-    public int Health { get; private set; }
-
-    /// <summary>
-    /// Vida máxima del enano.
-    /// </summary>
-    public int MaxHealth { get; private set; }
-
-    /// <summary>
-    /// Permite cambiar la espada del enano por otra.
-    /// </summary>
-    /// <param name="newSword">Nueva espada a equipar.</param>
-    public void SetSword(IObject newSword)
-    {
-        if (newSword != null)
-        {
-            sword = newSword;
-        }
-    }
-
-    /// <summary>
-    /// Permite cambiar el escudo del enano por otro.
-    /// </summary>
-    /// <param name="newShield">Nuevo escudo a equipar.</param>
-    public void SetShield(IObject newShield)
-    {
-        if (newShield != null) 
-        {
-            shield = newShield;
-        }
-    }
-
-    /// <summary>
-    /// Recibe un ataque proveniente de otro personaje.
-    /// </summary>
-    /// <param name="attacker">Personaje atacante.</param>
-    public void ReceiveAttack(ICharacter attacker)
-    {
-        int damage = Math.Max(0, attacker.GetAttack() - GetDefense());
-        Health = Math.Max(0, Health - damage);
-    }
-
-    /// <summary>
-    /// Obtiene el valor total de ataque del enano.
-    /// </summary>
-    /// <returns>Valor total de ataque.</returns>
-    public int GetAttack()
-    {
-        return sword.Attack;
-    }
-
-    /// <summary>
-    /// Obtiene el valor total de defensa del enano.
-    /// </summary>
-    /// <returns>Valor total de defensa.</returns>
-    public int GetDefense()
-    {
-        return shield.Defense;
-    }
-
-    /// <summary>
-    /// Restaura la vida del enano a su valor máximo.
-    /// </summary>
-    public void Heal()
-    {
-        Health = MaxHealth;
-    }
-
-    /// <summary>
-    /// Inicializa una nueva instancia del enano con su nombre y vida máxima además de sus ítems.
+    /// Inicializa una nueva instancia del enano
+    /// con valores por defecto.
     /// </summary>
     /// <param name="name">Nombre del enano.</param>
     public Dwarf(string name)
+        : base(name, 100)
     {
-        MaxHealth = 100;
-        Health = MaxHealth;
-        Name = name;
+        sword = new Sword(15);
+        shield = new Shield(10);
 
-        sword = new Sword();
-        shield = new Shield();
+        AddItem(sword);
+        AddItem(shield);
+    }
+
+    /// <summary>
+    /// Permite cambiar la espada del enano.
+    /// </summary>
+    /// <param name="newSword">Nueva espada a equipar.</param>
+    public void SetSword(Sword newSword)
+    {
+        if (newSword == null)
+        {
+            return;
+        }
+
+        RemoveItem(sword);
+
+        sword = newSword;
+
+        AddItem(sword);
+    }
+
+    /// <summary>
+    /// Permite cambiar el escudo del enano.
+    /// </summary>
+    /// <param name="newShield">Nuevo escudo a equipar.</param>
+    public void SetShield(Shield newShield)
+    {
+        if (newShield == null)
+        {
+            return;
+        }
+
+        RemoveItem(shield);
+
+        shield = newShield;
+
+        AddItem(shield);
     }
 }
