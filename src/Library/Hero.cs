@@ -11,8 +11,8 @@ public abstract class Hero : Character
 
     /// <summary>
     /// Agrega puntos de victoria al héroe.
-    /// Cada vez que alcanza un múltiplo de 5 VP,
-    /// el héroe recupera toda su vida.
+    /// Cada vez que el héroe supera un nuevo bloque
+    /// de 5 VP acumulados, recupera toda su vida.
     /// </summary>
     /// <param name="vp">Cantidad de VP a agregar.</param>
     public void AddVP(int vp)
@@ -22,9 +22,13 @@ public abstract class Hero : Character
             return;
         }
 
+        int previousLevel = TotalVP / 5;
+
         TotalVP += vp;
 
-        if (TotalVP % 5 == 0)
+        int currentLevel = TotalVP / 5;
+
+        if (currentLevel > previousLevel)
         {
             Heal();
         }
