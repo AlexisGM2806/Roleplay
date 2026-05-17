@@ -21,17 +21,29 @@ public abstract class Character
     public string Name { get; }
 
     /// <summary>
+    /// Indica si el personaje ha muerto.
+    /// </summary>
+    public bool IsDead
+    {
+        get
+        {
+            return Health == 0;
+        }
+    }
+
+    /// <summary>
     /// Lista de items equipados por el personaje.
     /// </summary>
-    private List<IObject> items = new List<IObject>();
+    protected readonly List<IItem> items = new List<IItem>();
 
     /// <summary>
     /// Agrega un item al personaje.
+    /// Los personajes normales no pueden equipar items mágicos.
     /// </summary>
     /// <param name="item">Item a equipar.</param>
-    public void AddItem(IObject item)
+    public virtual void AddItem(IItem item)
     {
-        if (item != null)
+        if (item != null && !item.IsMagical && !items.Contains(item))
         {
             items.Add(item);
         }
@@ -41,7 +53,7 @@ public abstract class Character
     /// Remueve un item del personaje.
     /// </summary>
     /// <param name="item">Item a remover.</param>
-    public void RemoveItem(IObject item)
+    public virtual void RemoveItem(IItem item)
     {
         if (item != null)
         {
@@ -54,11 +66,11 @@ public abstract class Character
     /// sumando todos los items ofensivos equipados.
     /// </summary>
     /// <returns>Valor total de ataque.</returns>
-    public int GetAttack()
+    public virtual int GetAttack()
     {
         int attack = 0;
 
-        foreach (IObject item in items)
+        foreach (IItem item in items)
         {
             if (item is IAttackItem attackItem)
             {
@@ -74,11 +86,11 @@ public abstract class Character
     /// sumando todos los items defensivos equipados.
     /// </summary>
     /// <returns>Valor total de defensa.</returns>
-    public int GetDefense()
+    public virtual int GetDefense()
     {
         int defense = 0;
 
-        foreach (IObject item in items)
+        foreach (IItem item in items)
         {
             if (item is IDefenseItem defenseItem)
             {
@@ -94,7 +106,7 @@ public abstract class Character
     /// reduciendo la vida según el daño recibido.
     /// </summary>
     /// <param name="attacker">Personaje atacante.</param>
-    public void ReceiveAttack(Character attacker)
+    public virtual void ReceiveAttack(Character attacker)
     {
         if (attacker == null)
         {
@@ -102,13 +114,14 @@ public abstract class Character
         }
 
         int damage = Math.Max(0, attacker.GetAttack() - GetDefense());
+
         Health = Math.Max(0, Health - damage);
     }
 
     /// <summary>
     /// Restaura la vida del personaje a su valor máximo.
     /// </summary>
-    public void Heal()
+    public virtual void Heal()
     {
         Health = MaxHealth;
     }

@@ -3,31 +3,30 @@ using System;
 namespace Library;
 
 /// <summary>
-/// Representa un berserker dentro del juego.
-/// Los berserkers utilizan hachas y armaduras
-/// para combatir.
+/// Representa un orco enemigo dentro del juego.
+/// Los orcos utilizan armas físicas y armaduras,
+/// pero no pueden utilizar items mágicos.
 /// </summary>
-public class Berserker : Hero
+public class Orc : Enemy
 {
     /// <summary>
-    /// Hacha equipada por el berserker.
+    /// Hacha equipada por el orco.
     /// </summary>
     private Axe axe;
 
     /// <summary>
-    /// Armadura equipada por el berserker.
+    /// Armadura equipada por el orco.
     /// </summary>
     private Armor armor;
 
     /// <summary>
-    /// Inicializa una nueva instancia del berserker
-    /// con valores por defecto.
+    /// Inicializa un nuevo orco con valores por defecto.
     /// </summary>
-    /// <param name="name">Nombre del berserker.</param>
-    public Berserker(string name)
-        : base(name, 150)
+    /// <param name="name">Nombre del orco.</param>
+    public Orc(string name)
+        : base(name, 130, 2)
     {
-        axe = new Axe(20);
+        axe = new Axe(15);
         armor = new Armor(10);
 
         AddItem(axe);
@@ -35,9 +34,9 @@ public class Berserker : Hero
     }
 
     /// <summary>
-    /// Permite cambiar el hacha del berserker.
+    /// Equipa una nueva hacha al orco.
     /// </summary>
-    /// <param name="newAxe">Nueva hacha a equipar.</param>
+    /// <param name="newAxe">Nueva hacha.</param>
     public void SetAxe(Axe newAxe)
     {
         if (newAxe == null)
@@ -53,9 +52,9 @@ public class Berserker : Hero
     }
 
     /// <summary>
-    /// Permite cambiar la armadura del berserker.
+    /// Equipa una nueva armadura al orco.
     /// </summary>
-    /// <param name="newArmor">Nueva armadura a equipar.</param>
+    /// <param name="newArmor">Nueva armadura.</param>
     public void SetArmor(Armor newArmor)
     {
         if (newArmor == null)

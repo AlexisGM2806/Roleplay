@@ -4,111 +4,69 @@ namespace Library;
 
 /// <summary>
 /// Representa un bastardo dentro del juego.
-/// Los bastardos utilizan un machete para atacar y una armadura para defenderse.
+/// Los bastardos utilizan un machete para atacar
+/// y una armadura para defenderse.
 /// </summary>
-public class Bastardo : Enemy
+public class Bastard : Enemy
 {
     /// <summary>
-    /// Hacha del bastardo.
+    /// Machete equipado por el bastardo.
     /// </summary>
-    private IAttackItem machete { get; set; }
-   
-    /// <summary>
-    /// Armadura del bastardo.
-    /// </summary>
-    private IDefenseItem layer { get; set; }
+    private Machete machete;
 
     /// <summary>
-    /// Nombre del bastardo.
+    /// Armadura equipada por el bastardo.
     /// </summary>
-    public string Name { get; set; }
+    private Layer layer;
 
     /// <summary>
-    /// Vida actual del bastardo.
-    /// </summary>
-    public int Health { get; private set; }
-
-    /// <summary>
-    /// Vida máxima del bastardo.
-    /// </summary>
-    public int MaxHealth { get; private set; }
-
-    /// <summary>
-    /// Inicializa una nueva instancia del berserker con su nombre y vida máxima además de sus ítems.
-    /// Se inicializan valores por defecto para evitar referencias nulas.
+    /// Inicializa una nueva instancia del bastardo
+    /// con valores por defecto.
     /// </summary>
     /// <param name="name">Nombre del bastardo.</param>
-    public Bastardo(string name)
+    public Bastard(string name)
+        : base(name, 150, 3)
     {
-        Name = name;
-        MaxHealth = 150;
-        Health = MaxHealth;
         machete = new Machete();
         layer = new Layer();
+
+        AddItem(machete);
+        AddItem(layer);
     }
 
     /// <summary>
-    /// Obtiene el valor total de ataque del bastardo según su machete equipado.
-    /// </summary>
-    /// <returns>Valor total de ataque.</returns>
-    public int GetAttack()
-    {
-        return machete.Attack;
-    }
-
-    /// <summary>
-    /// Obtiene el valor total de defensa del bastardo según su armadura equipada.
-    /// </summary>
-    /// <returns>Valor total de defensa.</returns>
-    public int GetDefense()
-    {
-        return layer.Defense;
-    }
-
-    /// <summary>
-    /// Recibe un ataque de otro personaje, reduciendo la vida del bastardo
-    /// en función del ataque del atacante y su defensa total.
-    /// Se utiliza Math.Max para asegurar que:
-    /// - El daño nunca sea negativo.
-    /// - La vida nunca baje de 0.
-    /// </summary>
-    /// <param name="attacker">Personaje que realiza el ataque.</param>
-    public void ReceiveAttack(ICharacter attacker)
-    {
-        if (attacker == null) return;
-        int damage = Math.Max(0, attacker.GetAttack() - GetDefense());
-        Health = Math.Max(0, Health - damage);
-    }
-
-    /// <summary>
-    /// Restaura la vida del bastardo a su valor máximo.
-    /// </summary>
-    public void Heal()
-    {
-        Health = MaxHealth;
-    }
-
-    /// <summary>
-    /// Permite cambiar el machete del bastardo por otro.
+    /// Permite cambiar el machete del bastardo.
     /// </summary>
     /// <param name="newMachete">Nuevo machete a equipar.</param>
-    public void SetMachete(IAttackItem newMachete)
+    public void SetMachete(Machete newMachete)
     {
-        if (newMachete != null)
+        if (newMachete == null)
         {
-            machete = newMachete;
+            return;
         }
+
+        RemoveItem(machete);
+
+        machete = newMachete;
+
+        AddItem(machete);
     }
 
     /// <summary>
-    /// Permite cambiar la armadura del bastardo por otra.
+    /// Permite cambiar la armadura del bastardo.
     /// </summary>
     /// <param name="newLayer">Nueva armadura a equipar.</param>
-    public void SetLayer(IDefenseItem newLayer)
+    public void SetLayer(Layer newLayer)
     {
-        if (newLayer != null)
+        if (newLayer == null)
         {
-            layer = newLayer;
+            return;
         }
+
+        RemoveItem(layer);
+
+        layer = newLayer;
+
+        AddItem(layer);
     }
 }
